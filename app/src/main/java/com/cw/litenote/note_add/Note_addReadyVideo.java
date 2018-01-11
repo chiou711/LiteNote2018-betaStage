@@ -194,7 +194,7 @@ public class Note_addReadyVideo extends Activity {
 					else
 					{
 						Toast.makeText(this,
-								"For multiple files, please check if your selection is a local file.",
+								R.string.add_new_file_error,
 								Toast.LENGTH_LONG)
 								.show();					
 					}	

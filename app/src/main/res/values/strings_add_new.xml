@@ -4,14 +4,14 @@
     <string name="add_new_note_position">New note position at page:</string>
     <string name="add_new_note_top">To the top</string>
     <string name="add_new_note_bottom">To the bottom</string>
-    <string name="add_new_link_title_also">Also add the title of link</string>
+    <string name="add_new_link_title_also">Adding new link, also involve the title of link</string>
     <string name="add_new_note_option_title">Add new note:</string>
     <string name="add_new_note_title">Add new note</string>
     <string name="add_new_note_message">Note content:</string>
     <string name="add_new_note_button_add">Add</string>
     <string name="add_new_note_confirm_save">The new note has contained content, do you want to save it?</string>
     <string name="dialog_add_new_option_title">Set the operation for new note:</string>
-    <string name="dialog_add_new_multiple">Add local file note: includes all same kind in the directory</string>
+    <string name="dialog_add_new_multiple">Adding ready file note: involve all same kind files in the directory</string>
     <string name="note_text">text</string>
     <string name="note_camera_image">Camera image</string>
     <string name="note_camera_video">Camera video</string>
@@ -36,4 +36,5 @@
     <string name="audio_file_not_found">Audio file not found or not selected</string>
     <string name="add_new_start">Start adding note</string>
     <string name="add_new_stop">Stop adding note</string>
+    <string name="add_new_file_error">Adding multiple files, please confirm your selection is a local file.</string>
 </resources>

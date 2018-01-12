@@ -48,6 +48,9 @@ public class Drawer {
 
                         if(listView.getCount() >0) {
                             act.getActionBar().setTitle(MainAct.mAppTitle);
+
+                            // will call Folder_adapter _getView to update audio playing high light
+                            listView.invalidateViews();
                         }
                     }
 

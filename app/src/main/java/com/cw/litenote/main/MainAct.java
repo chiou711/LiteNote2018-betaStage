@@ -840,14 +840,13 @@ public class MainAct extends FragmentActivity implements OnBackStackChangedListe
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
-                else {
+                else
+                {
                     fragmentManager.popBackStack();
-                    {
-                        initActionBar(mMenu, drawer);
-                        mFolderTitle = dB_drawer.getFolderTitle(FolderUi.getFocus_folderPos(),true);
-                        setTitle(mFolderTitle);
-                        drawer.closeDrawer();
-                    }
+                    initActionBar(mMenu, drawer);
+                    mFolderTitle = dB_drawer.getFolderTitle(FolderUi.getFocus_folderPos(),true);
+                    setTitle(mFolderTitle);
+                    drawer.closeDrawer();
                 }
 				return true;
 			}

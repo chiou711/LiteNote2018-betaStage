@@ -356,7 +356,7 @@ public class FolderUi
 	}
 
     private static SharedPreferences mPref_delete_warn;
-	public static void editFolder(final FragmentActivity act, final int position,final SimpleDragSortCursorAdapter folderAdapter)
+	static void editFolder(final FragmentActivity act, final int position,final SimpleDragSortCursorAdapter folderAdapter)
 	{
 		DB_drawer db = new DB_drawer(act);
 
@@ -366,6 +366,7 @@ public class FolderUi
 		final EditText editText = new EditText(act);
 	    editText.setText(folderTitle);
 	    editText.setSelection(folderTitle.length()); // set edit text start position
+
 	    //update tab info
 	    Builder builder = new Builder(act);
 	    builder.setTitle(R.string.edit_folder_title)

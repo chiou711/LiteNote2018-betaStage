@@ -192,7 +192,7 @@ public class MailPagesFragment extends Fragment{
 
 	    @Override
 	    public void onClick(View v){
-	    	String attachmentFileName;
+	    	String[] attachmentFileName={"",""};
 	        String strEMailAddr = editEMailAddrText.getText().toString();
 	        if(strEMailAddr.length() > 0)
 	        {
@@ -207,27 +207,29 @@ public class MailPagesFragment extends Fragment{
                 }
                 
 				// save to SD card
-				attachmentFileName = Util.getStorageDirName(getActivity()) + "_SEND_" + // file name
+				attachmentFileName[0] = Util.getStorageDirName(getActivity()) + "_SEND_" + // file name
                                                             pagesName +
 		        							                Util.getCurrentTimeString() + // time
 		        							                ".xml"; // extension name
+
+				attachmentFileName[1] = Util.getStorageDirName(getActivity()) + "_SEND_" + // file name
+						pagesName +
+						Util.getCurrentTimeString() + // time
+						".txt"; // extension name
 				Util util = new Util(getActivity());
 
-				// null: for page selection
+				// for page selection
 				String[] picFileNameArr = null;
 		        if(extras == null)
 		        {
-					mEMailBodyString = util.exportToSdCard(attachmentFileName, // attachment name
-														   list_selPage.mCheckedArr);// checked page array
-					mEMailBodyString = util.trimXMLtag(mEMailBodyString);
-	        	}
-	        	else //other: for Note_view or selected Check notes
-	        	{
-		    	    mSentString = extras.getString("SentString");
-					mEMailBodyString = util.exportStringToSdCard(attachmentFileName, // attachment name
-															   	 mSentString); // sent string
-					mEMailBodyString = util.trimXMLtag(mEMailBodyString);
-		        	picFileNameArr = extras.getStringArray("SentPictureFileNameArray");
+		            // XML file
+                    mEMailBodyString = util.exportToSdCard(attachmentFileName[0], // attachment name
+                                                            list_selPage.mCheckedArr);// checked page array
+                    mEMailBodyString = util.trimXMLtag(mEMailBodyString);
+
+                    // TXT file
+                    util.exportToSdCardFile(attachmentFileName[1], // attachment name
+                                            mEMailBodyString); // sent string
 	        	}
 
 	        	mPref_email.edit().putString("KEY_DEFAULT_EMAIL_ADDR", strEMailAddr).apply();
@@ -249,9 +251,9 @@ public class MailPagesFragment extends Fragment{
 	
 	// Send e-Mail : send file by e-Mail
     public final static int EMAIL_PAGES = 102;
-	public static String mAttachmentFileName;
+	public static String[] mAttachmentFileName;
 	void sendEMail(String strEMailAddr,  // eMail address
-			       String attachmentFileName, // attachment name
+			       String[] attachmentFileName, // attachment name
 			       String[] picFileNameArray) // attachment picture file name
 	{
 		mAttachmentFileName = attachmentFileName;
@@ -267,11 +269,13 @@ public class MailPagesFragment extends Fragment{
 			 	 			+ mEMailBodyString;
     	
     	// attachment: message
-    	List<String> filePaths = new ArrayList<String>();
-    	String messagePath = "file:///" + Environment.getExternalStorageDirectory().getPath() + 
-                			 "/" + Util.getStorageDirName(mContext) + "/" + 
-                			 attachmentFileName;// message file name
-    	filePaths.add(messagePath);
+		List<String> filePaths = new ArrayList<String>();
+		for(int i=0;i<attachmentFileName.length;i++) {
+			String messagePath = "file:///" + Environment.getExternalStorageDirectory().getPath() +
+					"/" + Util.getStorageDirName(mContext) + "/" +
+					attachmentFileName[i];// message file name
+			filePaths.add(messagePath);
+		}
     	
     	// attachment: pictures
     	if(picFileNameArray != null)

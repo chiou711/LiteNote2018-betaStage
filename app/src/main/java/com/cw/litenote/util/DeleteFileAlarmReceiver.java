@@ -16,14 +16,16 @@ public class DeleteFileAlarmReceiver extends BroadcastReceiver
 
    public DeleteFileAlarmReceiver(){}
 
-   public DeleteFileAlarmReceiver(Context context, long timeMilliSec, String filename)
+   public DeleteFileAlarmReceiver(Context context, long timeMilliSec, String[] filename)
    {
-		Intent intent = new Intent(context, DeleteFileAlarmReceiver.class);
-		intent.putExtra(EXTRA_FILENAME, filename);
-		
-		AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent pendIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-		alarmMgr.set(AlarmManager.RTC_WAKEUP, timeMilliSec, pendIntent);
+   	    for(int i=0; i<filename.length;i++) {
+			Intent intent = new Intent(context, DeleteFileAlarmReceiver.class);
+			intent.putExtra(EXTRA_FILENAME, filename[i]);
+
+			AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+			PendingIntent pendIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+			alarmMgr.set(AlarmManager.RTC_WAKEUP, timeMilliSec, pendIntent);
+		}
    }
 
    @Override
@@ -47,7 +49,13 @@ public class DeleteFileAlarmReceiver extends BroadcastReceiver
 //		        return name.matches( "LiteNote_SEND.*\\.txt" ); // starts with LiteNote_SEND, ends with txt
 //		        return name.matches( ".*\\.txt" ); // end with txt
 //		        return name.matches("(LiteNote_SEND.+(\\.(?i)(txt))$)" );
-		        return name.matches("("+ Util.getStorageDirName(context)+"_SEND.+(\\.(?i)(xml))$)" );
+				boolean isMatch = false;
+				if(name.matches("("+ Util.getStorageDirName(context)+"_SEND.+(\\.(?i)(xml))$)" ) ||
+				   name.matches("("+ Util.getStorageDirName(context)+"_SEND.+(\\.(?i)(txt))$)" )    )
+				{
+					isMatch = true;
+				}
+		        return isMatch;
 		    }
 		} );
 		for ( final File fileFound : files )

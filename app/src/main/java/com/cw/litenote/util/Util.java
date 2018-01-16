@@ -164,45 +164,26 @@ public class Util
 		// sent data
 		data = addXmlTag(data);
 		mEMailString = data;
-		
-		exportToSdCardFile(data,filename);
-		
-		return mEMailString;
-	}
-	
-	// save to SD card: for NoteView class
-	public String exportStringToSdCard(String filename, String data)
-	{   
-		mEMailString = data;
 
-		///
-		//??? can not duplicate yet
-//		java.lang.NullPointerException: Attempt to invoke virtual method 'int java.lang.String.length()' on a null object reference
-//		at java.io.Writer.write(Writer.java:141)
-//		at com.cw.litenote.util.f.b(Unknown Source)
-//		at com.cw.litenote.util.f.a(Unknown Source)
-//		at com.cw.litenote.operation.c.b$a.onClick(Unknown Source)
-//		at android.view.View.performClick(View.java:4785)
-		///
+        exportToSdCardFile(filename,data);
 
-		exportToSdCardFile(data,filename);
 		return mEMailString;
 	}
 	
 	// Export data to be SD Card file
-	private void exportToSdCardFile(String data,String filename)
+	public void exportToSdCardFile(String filename,String data)
 	{
 	    // SD card path + "/" + directory path
-	    String dirString = Environment.getExternalStorageDirectory().toString() + 
-	    		              "/" + 
+	    String dirString = Environment.getExternalStorageDirectory().toString() +
+	    		              "/" +
 	    		              Util.getStorageDirName(mContext);
-	    
+
 		File dir = new File(dirString);
 		if(!dir.isDirectory())
 			dir.mkdir();
 		File file = new File(dir, filename);
 		file.setReadOnly();
-		
+
 //		FileWriter fw = null;
 //		try {
 //			fw = new FileWriter(file);
@@ -211,7 +192,7 @@ public class Util
 //			e1.printStackTrace();
 //		}
 //		BufferedWriter bw = new BufferedWriter(fw);
-		
+
 		BufferedWriter bw = null;
 		OutputStreamWriter osw = null;
 
@@ -225,7 +206,7 @@ public class Util
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			bw.write(data);
 			bw.flush();

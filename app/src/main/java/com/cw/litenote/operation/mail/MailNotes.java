@@ -99,19 +99,32 @@ public class MailNotes {
 
         @Override
         public void onClick(View v){
-            String attachmentFileName;
+            String[] attachmentFileName={"",""};
             String strEMailAddr = editEMailAddrText.getText().toString();
             if(strEMailAddr.length() > 0)
             {
                 // save to SD card
-                attachmentFileName = Util.getStorageDirName(mAct) + "_SEND_" + // file name
+                attachmentFileName[0] = Util.getStorageDirName(mAct) + "_SEND_" + // file name
                                      Util.getCurrentTimeString() + // time
                                      ".xml"; // extension name
+
+                attachmentFileName[1] = Util.getStorageDirName(mAct) + "_SEND_" + // file name
+                        Util.getCurrentTimeString() + // time
+                        ".txt"; // extension name
+
+
                 Util util = new Util(mAct);
 
-                mEMailBodyString = util.exportStringToSdCard(attachmentFileName, // attachment name
-                                                             mSentString); // sent string
-                mEMailBodyString = util.trimXMLtag(mEMailBodyString);
+                // XML file
+                util.exportToSdCardFile(attachmentFileName[0], // attachment name
+                                        mSentString); // sent string
+
+                mEMailBodyString = util.trimXMLtag(mSentString);
+
+                // TXT file
+                util.exportToSdCardFile(attachmentFileName[1], // attachment name
+                                        mEMailBodyString); // sent string
+
 
                 mPref_email.edit().putString("KEY_DEFAULT_EMAIL_ADDR", strEMailAddr).apply();
 
@@ -131,10 +144,10 @@ public class MailNotes {
     }
 
     // Send e-Mail : send file by e-Mail
-    public static String mAttachmentFileName;
+    public static String[] mAttachmentFileName;
     public final static int EMAIL = 101;
     void sendEMail(String strEMailAddr,  // eMail address
-                   String attachmentFileName, // attachment name
+                   String[] attachmentFileName, // attachment name
                    String[] picFileNameArray) // attachment picture file name
     {
         mAttachmentFileName = attachmentFileName;
@@ -151,10 +164,13 @@ public class MailNotes {
 
         // attachment: message
         List<String> filePaths = new ArrayList<String>();
-        String messagePath = "file:///" + Environment.getExternalStorageDirectory().getPath() +
-                "/" + Util.getStorageDirName(mAct) + "/" +
-                attachmentFileName;// message file name
-        filePaths.add(messagePath);
+
+        for(int i=0;i<attachmentFileName.length;i++) {
+            String messagePath = "file:///" + Environment.getExternalStorageDirectory().getPath() +
+                    "/" + Util.getStorageDirName(mAct) + "/" +
+                    attachmentFileName[i];// message file name
+            filePaths.add(messagePath);
+        }
 
         // attachment: pictures
         if(picFileNameArray != null)

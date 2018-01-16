@@ -510,10 +510,10 @@ public class MainAct extends FragmentActivity implements OnBackStackChangedListe
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         System.out.println("MainAct / _onActivityResult ");
-        String stringFileName = null;
+        String stringFileName[] = null;
 
         // mail
-        if((requestCode== MailNotes.EMAIL) ||(requestCode== MailPagesFragment.EMAIL_PAGES)) {
+        if((requestCode== MailNotes.EMAIL) || (requestCode== MailPagesFragment.EMAIL_PAGES)) {
             if (requestCode == MailNotes.EMAIL)
                 stringFileName = MailNotes.mAttachmentFileName;
             else if (requestCode == MailPagesFragment.EMAIL_PAGES)

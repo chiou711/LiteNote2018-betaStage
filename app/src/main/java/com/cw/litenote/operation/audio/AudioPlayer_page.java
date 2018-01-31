@@ -123,6 +123,14 @@ public class AudioPlayer_page
                 // set footer message with audio name
                 String audioStr = AudioManager.getAudioStringAt(AudioManager.mAudioPos);
                 audio_panel_title_textView.setText(Util.getDisplayNameByUriString(audioStr, act));
+
+                // show audio playing item number
+                TextView audioPanel_audio_number = (TextView) audio_panel.findViewById(R.id.audioPanel_audio_number);
+                String message = act.getResources().getString(R.string.menu_button_play) +
+                        "#" +
+                        (AudioManager.mAudioPos +1);
+                audioPanel_audio_number.setText(message);
+
                 seekBarProgress.setVisibility(View.VISIBLE);
             } else {
                 audio_panel.setVisibility(View.GONE);

@@ -42,6 +42,7 @@
     <string name="edit_page_button_ignore">取消</string>
     <string name="file_not_found">未找到文件</string>
     <string name="file_is_not_created">未建立文件</string>
+    <string name="folder_operation">文件夹操作</string>
     <string name="page_operation">笔记页操作 ></string>
     <string name="note_operation">笔记操作 ></string>
     <string name="backup_operation">备份操作 ></string>

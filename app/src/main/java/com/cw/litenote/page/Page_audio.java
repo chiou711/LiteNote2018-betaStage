@@ -192,16 +192,13 @@ public class Page_audio {
             {
                 AudioPlayer_page.willPlayNext = false;
 
-                AudioManager.mAudioPos--;
-                if( AudioManager.mAudioPos < 0)
-                    AudioManager.mAudioPos++; //back to first index
-
-                while (AudioManager.getCheckedAudio(AudioManager.mAudioPos) == 0)
-                {
+                do {
                     AudioManager.mAudioPos--;
                     if( AudioManager.mAudioPos < 0)
                         AudioManager.mAudioPos++; //back to first index
+
                 }
+                while (AudioManager.getCheckedAudio(AudioManager.mAudioPos) == 0);
 
                 playNextAudio();
             }
@@ -215,14 +212,13 @@ public class Page_audio {
             {
                 AudioPlayer_page.willPlayNext = true;
 
-                AudioManager.mAudioPos++;
-                if( AudioManager.mAudioPos >= AudioManager.getAudioList().size())
-                    AudioManager.mAudioPos = 0; //back to first index
-
-                while (AudioManager.getCheckedAudio(AudioManager.mAudioPos) == 0)
+                do
                 {
                     AudioManager.mAudioPos++;
+                    if( AudioManager.mAudioPos >= AudioManager.getAudioList().size())
+                        AudioManager.mAudioPos = 0; //back to first index
                 }
+                while (AudioManager.getCheckedAudio(AudioManager.mAudioPos) == 0);
 
                 playNextAudio();
             }

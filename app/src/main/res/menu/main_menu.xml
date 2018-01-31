@@ -20,7 +20,7 @@
         android:orderInCategory="1"
         android:showAsAction="always|withText"
         android:title="Play"
-        android:icon="@android:drawable/ic_menu_slideshow">
+        android:icon="@drawable/ic_media_play">
 
     <!-- Play sub menu -->
     <menu xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -29,13 +29,13 @@
             android:orderInCategory="0"
             android:showAsAction="never"
             android:title="@string/menu_button_play_audio"
-            android:icon="@drawable/ic_media_play"/>
+            android:icon="@drawable/ic_menu_play_clip"/>
         <item
             android:id="@+id/SLIDE_SHOW"
             android:orderInCategory="1"
             android:showAsAction="never"
             android:title="@string/menu_button_slide_show"
-            android:icon="@drawable/ic_menu_play_clip"/>
+            android:icon="@android:drawable/ic_menu_slideshow"/>
         <item
             android:id="@+id/GALLERY"
             android:orderInCategory="2"
@@ -198,7 +198,7 @@
         android:id="@+id/ADD_FOLDER_OPTIONS"
         android:orderInCategory="0"
         android:showAsAction="always|withText"
-        android:title="@string/options"
+        android:title="@string/folder_operation"
         android:icon="@android:drawable/ic_menu_more">
 
     <!-- more sub menu -->

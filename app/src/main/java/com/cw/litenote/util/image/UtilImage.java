@@ -691,10 +691,13 @@ public class UtilImage
     	if(!has)
     	{
     		String fn = Util.getDisplayNameByUriString(string, act);
-	    	fn = fn.toLowerCase(Locale.getDefault());
-	    	if(	fn.endsWith("jpg") || fn.endsWith("gif") ||
-		    		fn.endsWith("png") || fn.endsWith("bmp") || fn.endsWith("webp") ) 
-			    	has = true;
+
+    		if(!Util.isEmptyString(fn)) {
+				fn = fn.toLowerCase(Locale.getDefault());
+				if (fn.endsWith("jpg") || fn.endsWith("gif") ||
+						fn.endsWith("png") || fn.endsWith("bmp") || fn.endsWith("webp"))
+					has = true;
+			}
     	}    	
     	return has;
     }        

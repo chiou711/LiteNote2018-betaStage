@@ -393,15 +393,9 @@ public class Checked_notes_option {
                 DB_page.setFocusPage_tableId(destPageTableId);
                 for(int i=0;i< copyItems.length;i++)
                 {
-                    int marking = 0;
-                    // default marking of picture or audio is 1
-                    if( (!Util.isEmptyString(copyItemsPicture[i])) ||
-                        (!Util.isEmptyString(copyItemsAudio[i]))      )
-                        marking = 1;
-
                     // move to same page is not allowed
                     if(!((action == MOVE_TO) && (srcPageTableId == destPageTableId)))
-                        mDb_page.insertNote(copyItems[i],copyItemsPicture[i], copyItemsAudio[i], "", copyItemsLink[i], copyItemsBody[i],marking, copyItemsTime[i]);
+                        mDb_page.insertNote(copyItems[i],copyItemsPicture[i], copyItemsAudio[i], "", copyItemsLink[i], copyItemsBody[i],1, copyItemsTime[i]);
                 }
 
                 //recover table Id of original page

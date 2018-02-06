@@ -1058,7 +1058,7 @@ public class Util
 	{
 		boolean is = false;
 		
-		if(Util.isEmptyString(strLink))
+		if(Util.isEmptyString(strLink) || (!strLink.startsWith("http")))
 			return is;
 		
 //		//check if single string

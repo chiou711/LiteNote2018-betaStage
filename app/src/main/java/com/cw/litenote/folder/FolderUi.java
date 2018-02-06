@@ -30,6 +30,7 @@ import com.cw.litenote.main.MainAct;
 import com.cw.litenote.page.PageUi;
 import com.cw.litenote.define.Define;
 import com.cw.litenote.tabs.TabsHost;
+import com.cw.litenote.util.TouchableEditText;
 import com.cw.litenote.util.Util;
 import com.cw.litenote.util.preferences.Pref;
 import com.mobeta.android.dslv.DragSortListView;
@@ -68,7 +69,7 @@ public class FolderUi
 
         // get layout inflater
         View rootView = act.getLayoutInflater().inflate(R.layout.add_new_folder, null);
-        final EditText editFolderName = (EditText) rootView.findViewById(R.id.new_folder_name);
+        final TouchableEditText editFolderName = (TouchableEditText) rootView.findViewById(R.id.new_folder_name);
 
         // set cursor
         try {
@@ -93,6 +94,7 @@ public class FolderUi
             public boolean onTouch(View v, MotionEvent event) {
                 ((EditText) v).setText(hintFolderName);
                 ((EditText) v).setSelection(hintFolderName.length());
+                v.performClick();
                 return false;
             }
         });

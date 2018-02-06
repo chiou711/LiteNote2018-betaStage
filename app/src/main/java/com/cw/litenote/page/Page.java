@@ -165,7 +165,8 @@ public class Page extends UilListViewBaseFragment
             pref_open_youtube = mAct.getSharedPreferences("show_note_attribute", 0);
 
             if( Util.isYouTubeLink(linkStr) &&
-                    pref_open_youtube.getString("KEY_VIEW_NOTE_LAUNCH_YOUTUBE", "no").equalsIgnoreCase("yes") )
+                pref_open_youtube.getString("KEY_VIEW_NOTE_LAUNCH_YOUTUBE", "no")
+						         .equalsIgnoreCase("yes") )
             {
                 AudioManager.stopAudioPlayer();
 
@@ -756,7 +757,15 @@ public class Page extends UilListViewBaseFragment
 				endCursor--;
 		}
 	}
-    
+
+    static public int getNotesCountInPage()
+    {
+        mDb_page.open();
+        int count = mDb_page.getNotesCount(false);
+        mDb_page.close();
+        return count;
+    }
+
 
 	/*
 	 * inner class for note list loader
@@ -796,4 +805,5 @@ public class Page extends UilListViewBaseFragment
 			}
 		}
 	}
+
 }

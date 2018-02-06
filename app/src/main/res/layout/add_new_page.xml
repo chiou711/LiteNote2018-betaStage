@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
 	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -43,7 +43,8 @@
 		android:text="@string/edit_page_tab_message"
 		android:textColor="@android:color/white"/>
 
-	<EditText android:id="@+id/new_page_name"
+	<com.cw.litenote.util.TouchableEditText
+		android:id="@+id/new_page_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType=""

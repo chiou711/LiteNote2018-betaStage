@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.cw.litenote.folder.FolderUi;
 import com.cw.litenote.tabs.TabsHost;
 import com.cw.litenote.main.MainAct;
 import com.cw.litenote.define.Define;
+import com.cw.litenote.util.TouchableEditText;
 import com.cw.litenote.util.Util;
 import com.cw.litenote.util.image.UtilImage;
 import com.cw.litenote.util.preferences.Pref;
@@ -390,7 +392,7 @@ public class PageUi
 
         // get layout inflater
         View rootView = act.getLayoutInflater().inflate(R.layout.add_new_page, null);
-        final EditText editPageName = (EditText) rootView.findViewById(R.id.new_page_name);
+        final TouchableEditText editPageName = (TouchableEditText)rootView.findViewById(R.id.new_page_name);
 
         // set cursor
         try {
@@ -400,17 +402,34 @@ public class PageUi
         } catch (Exception ignored) {
         }
 
+        final String hintPageName = pageName;
+
         // set hint
-        editPageName.setHint(pageName);
+//        editPageName.setHint(pageName);
+
         editPageName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ((EditText) v).setText("");
-                    ((EditText) v).setSelection(0);
+//                    ((EditText) v).setText("");
+//                    ((EditText) v).setSelection(0);
+					((EditText) v).setHint(hintPageName);
                 }
             }
         });
+
+
+        editPageName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((EditText) v).setText(hintPageName);
+                ((EditText) v).setSelection(hintPageName.length());
+                v.performClick();
+                return false;
+            }
+
+        });
+
 
         // radio buttons
         final RadioGroup mRadioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup_new_page_at);
@@ -593,9 +612,7 @@ public class PageUi
 			     (MainAct.mPlaying_pagePos == getFocus_pagePos()) &&
 	     	     (MainAct.mPlaying_folderPos == FolderUi.getFocus_folderPos())  );
     }
-    
+
+
+
 }
-
-
-
-

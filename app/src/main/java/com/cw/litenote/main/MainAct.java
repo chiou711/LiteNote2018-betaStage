@@ -537,10 +537,15 @@ public class MainAct extends FragmentActivity implements OnBackStackChangedListe
 
             builder = new AlertDialog.Builder(this);
 
-            Page.currPlayPosition++;
+            do
+            {
+                Page.currPlayPosition++;
+                if(Page.currPlayPosition >= Page.getNotesCountInPage())
+                    Page.currPlayPosition = 0; //back to first index
 
-            String link = mMainUi.getYouTubeLink(this,Page.currPlayPosition);
-            nextLinkTitle =  Util.getYouTubeTitle(link);
+                nextLinkTitle = mMainUi.getYouTubeLink(this,Page.currPlayPosition);
+            }
+            while (!Util.isYouTubeLink(nextLinkTitle));
 
             countStr = getResources().getString(R.string.message_continue_or_stop_YouTube_message);
             countStr = countStr.replaceFirst("[0-9]",String.valueOf(count));

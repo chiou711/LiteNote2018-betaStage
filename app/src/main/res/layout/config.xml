@@ -232,6 +232,32 @@
 	</LinearLayout>
 	<View android:layout_width="match_parent" android:layout_height="1dip" android:background="#4f4f4f" />
 
+	<!-- Recover All Settings -->
+	<LinearLayout
+		android:id="@+id/RecoverAllSettings"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="5dp"
+		android:gravity="center"
+		android:orientation="horizontal" >
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="0dp"
+			android:src="@drawable/ic_menu_preferences"
+			android:contentDescription=""/>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:minHeight="50dp"
+			android:gravity="center_vertical"
+			android:paddingLeft="5dp"
+			android:text="@string/config_recover_all_settings"
+			android:textStyle="normal"
+			android:textSize="18sp"/>
+	</LinearLayout>
+	<View android:layout_width="match_parent" android:layout_height="1dip" android:background="#4f4f4f" />
+
     </LinearLayout>
 
 </ScrollView>

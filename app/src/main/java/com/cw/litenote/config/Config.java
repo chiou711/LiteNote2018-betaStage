@@ -70,10 +70,13 @@ public class Config extends Fragment
 
 		//Set vibration time length
 		setVibrationTimeLength();
-		
-		//set to default
+
+		//delete DB
 		deleteDB_button();
-		
+
+		//recover all settings to default
+		recover_all_settings_button();
+
 		// set Back pressed listener
 		((MainAct)getActivity()).setOnBackPressedListener(new BaseBackPressedListener(getActivity()));
 
@@ -452,20 +455,20 @@ public class Config extends Fragment
 	}
 
    
-   /**
-    * Delete DB
-    *  
-    */
-	public void deleteDB_button(){
-		View tvDelDB = mRootView.findViewById(R.id.SetDeleteDB);
-		tvDelDB.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				confirmDeleteDB(v);
-			}
-		});
-	}
-	
+    /**
+     * Delete DB
+     *
+     */
+    public void deleteDB_button(){
+	    View tvDelDB = mRootView.findViewById(R.id.SetDeleteDB);
+	    tvDelDB.setOnClickListener(new OnClickListener() {
+		   @Override
+		   public void onClick(View v) {
+			   confirmDeleteDB(v);
+		   }
+	   });
+    }
+
 	private void confirmDeleteDB(View view) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(R.string.confirm_dialog_title)
@@ -491,9 +494,9 @@ public class Config extends Fragment
 			//fix: select tab over next import amount => clean all => import => export => error
 			PageUi.setFocus_pagePos(0);
 			FolderUi.setFocus_folderPos(0);
-    		//remove preference 
-			clearSharedPreferences(getActivity());			
+
 			dialog.dismiss();
+
 			getActivity().finish();
 			Intent intent  = new Intent(getActivity(),MainAct.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -501,23 +504,80 @@ public class Config extends Fragment
 			getActivity().startActivity(intent);
 		}
     };
-    
-    
-    public static void clearSharedPreferences(Context ctx)
-	{
-		File dir = new File(ctx.getFilesDir().getParent() + "/shared_prefs/");
-		String[] children = dir.list();
-		for (int i = 0; i < children.length; i++) {
-			System.out.println("1: " + children[i]);
-			// clear each of the preferences
-			ctx.getSharedPreferences(children[i].replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().apply();
+
+	/**
+	 * recover all settings to default
+	 */
+	public void recover_all_settings_button(){
+		View recoverDefault = mRootView.findViewById(R.id.RecoverAllSettings);
+		recoverDefault.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				confirmRecoverDefault(v);
+			}
+		});
+	}
+
+
+	private void confirmRecoverDefault(View view) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle(R.string.confirm_dialog_title)
+				.setMessage(R.string.config_recover_all_settings)
+				.setPositiveButton(R.string.btn_OK, listener_recover_default)
+				.setNegativeButton(R.string.btn_Cancel, null)
+				.show();
+	}
+
+	DialogInterface.OnClickListener listener_recover_default = new DialogInterface.OnClickListener(){
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+
+			// stop audio player
+			if(AudioManager.mMediaPlayer != null)
+				AudioManager.stopAudioPlayer();
+
+			//remove preference
+			clearSharedPreferencesForSettings(getActivity());
+
+			dialog.dismiss();
+
+            ((MainAct)getActivity()).getSupportFragmentManager()//??? warning
+                    .beginTransaction()
+                    .detach(Config.this)
+                    .attach(Config.this)
+                    .commit();
 		}
+	};
+
+    public static void clearSharedPreferencesForSettings(Context context)
+	{
+		File dir = new File(context.getFilesDir().getParent() + "/shared_prefs/");
+
+		String[] children = dir.list();
+
+		for (int i = 0; i < children.length; i++) {
+			System.out.println("original: " + children[i]);
+
+            // EULA is using PreferenceManager.getDefaultSharedPreferences(MainAct.mAct)
+            // it will create packageName_preferences.xml
+
+			// clear each preferences XML file content, except default shared preferences file
+            if(!children[i].contains("preferences")) {
+                context.getSharedPreferences(children[i].replace(".xml", ""), Context.MODE_PRIVATE)
+                        .edit().clear().apply();
+                System.out.println("clear: " + children[i]);
+            }
+		}
+
 		// Make sure it has enough time to save all the committed changes
 		try { Thread.sleep(1000); } catch (InterruptedException e) {}
+
 		for (int i = 0; i < children.length; i++) {
-			System.out.println("2: " + children[i]);
 			// delete the files
-			new File(dir, children[i]).delete();
+            if(!children[i].contains("preferences")) {
+                new File(dir, children[i]).delete();
+                System.out.println("delete:" + " " + children[i]);
+            }
 		}
     }
     

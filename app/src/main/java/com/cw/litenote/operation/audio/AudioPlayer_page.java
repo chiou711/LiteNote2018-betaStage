@@ -492,9 +492,12 @@ public class AudioPlayer_page
         mAudioHandler = null;
         mAudioHandler = new Handler();
 
-        AudioManager.mMediaPlayer = null;
         AudioManager.isRunnableOn_page = true;
         AudioManager.isRunnableOn_note = false;
+		AudioManager.mMediaPlayer = null;
+
+		// verify audio URL
+		Async_audioUrlVerify.mIsOkUrl = false;
 
 		if( (AudioManager.getAudioPlayMode() == AudioManager.PAGE_PLAY_MODE) &&
             (AudioManager.getCheckedAudio(AudioManager.mAudioPos) == 0)          )
@@ -509,9 +512,15 @@ public class AudioPlayer_page
 		while(!Async_audioUrlVerify.mIsOkUrl)
         {
             //wait for Url verification
+			//wait for Url verification
+			try {
+				Thread.sleep(Util.oneSecond/20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
         }
 
-
+		// prepare audio
         if(Async_audioUrlVerify.mIsOkUrl)
         {
             // launch handler

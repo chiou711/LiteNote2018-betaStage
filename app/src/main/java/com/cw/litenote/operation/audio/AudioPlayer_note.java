@@ -278,6 +278,8 @@ public class AudioPlayer_note
         AudioManager.isRunnableOn_page = false;
         AudioManager.isRunnableOn_note = true;
         AudioManager.mMediaPlayer = null;
+
+        // verify audio
         Async_audioUrlVerify.mIsOkUrl = false;
 
 		mAudioUrlVerifyTask = new Async_audioUrlVerify(act, mAudioManager.getAudioStringAt(mAudioPos));
@@ -286,8 +288,14 @@ public class AudioPlayer_note
 		while(!Async_audioUrlVerify.mIsOkUrl)
         {
             //wait for Url verification
+            try {
+                Thread.sleep(Util.oneSecond/20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
+        // prepare audio
         if(Async_audioUrlVerify.mIsOkUrl)
         {
             // launch handler
